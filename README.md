@@ -1,6 +1,6 @@
 # EventLogMonitor
 
-This simple .NET software is used to hook event logs and display any changes in a table. Also it is possible to export the captured logs as XML.
+This simple .NET software is used to hook event logs and display any changes in a table. Also it is possible to export the captured logs to XML/CSV.
 
 ## instlation
 
