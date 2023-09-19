@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics.Eventing.Reader;
 using System.Xml;
+using System.Text;
 
 namespace EventLogMonitor_GUI
 {
@@ -77,7 +78,7 @@ namespace EventLogMonitor_GUI
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Faild Registre to : " + logName);
+                    Debug.WriteLine("Failed to register: " + logName);
                 }
             }
             Debug.WriteLine("Hooked Logs : ");
@@ -142,6 +143,37 @@ namespace EventLogMonitor_GUI
             tr.Close();
         }
 
+        // Save the events captured to the specified CSV path
+        private void SaveReportAsCSV(String path)
+        {
+            // Initialize a StringBuilder to hold the CSV content.
+            StringBuilder csvContent = new StringBuilder();
+
+            // Define the header of the CSV file with the desired columns.
+            string header = "Time,Log Name,Event Source,EventID,Event Details";
+            csvContent.AppendLine(header);
+
+            // Loop through all the EventRecord objects in the Events collection.
+            foreach (EventRecord eventRecord in Events)
+            {
+                // Extract the relevant information from the EventRecord.
+                string time = eventRecord.TimeCreated?.ToString("yyyy-MM-dd HH:mm:ss.fff") ?? "N/A"; // TimeCreated is a nullable DateTime
+                string logName = eventRecord.LogName ?? "N/A"; // Replace with actual property for log name if it exists
+                string eventSource = eventRecord.ProviderName ?? "N/A";
+                string eventId = eventRecord.Id.ToString();
+
+                // Extract the Event Details
+                string eventDetails = eventRecord.ToXml().Replace(",", ";").Replace("\n", "").Replace("\r", "");
+
+                // Create a new CSV row and append it to csvContent.
+                string newLine = $"{time},{logName},{eventSource},{eventId},\"{eventDetails}\"";
+                csvContent.AppendLine(newLine);
+            }
+
+            // Write the CSV content to the file.
+            File.WriteAllText(path, csvContent.ToString());
+        }
+
         // Open dialog for the user to choose where to save the XML report. Then call the function "SaveReportasXML()"
         // to save the report to the chosen path.
         private void exportXML(object sender, EventArgs e)
@@ -153,27 +185,62 @@ namespace EventLogMonitor_GUI
             }
         }
 
+        private void exportCSV(object sender, EventArgs e)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                SaveReportAsCSV(sd.FileName);
+            }
+        }
+
         private void SaveReportasJSON(string path)
         {
             //TODO: Implement this function (Low Priority)
         }
 
-        // This will get triggered when the "Dispaly Hooked Logs" get clicked. This will display a MessageBox that 
+        // This will get triggered when the "Display Hooked Logs" get clicked. This will display a MessageBox that 
         // contains all the hooked logs.
         private void displayHookedLogs(object sender, EventArgs e)
         {
-            String hookedLogs = $"The following is a list of the logs that is being monitored for changes:{Environment.NewLine}{Environment.NewLine}";
+            String hookedLogs = $"The following is a list of the logs that are being monitored for changes:{Environment.NewLine}{Environment.NewLine}";
+
             foreach (String logName in HookedLogs)
             {
-                hookedLogs += logName + '\n';
+                // Example: Construct the full path to the log file.
+                // Modify this to accurately represent where your logs are stored.
+                string logFilePath = @" C:\Windows\System32\winevt\Logs\" + logName + ".evtx";
+
+                // Get the file size in KB
+                FileInfo fileInfo = new FileInfo(logFilePath);
+                if (fileInfo.Exists)
+                {
+                    long sizeInBytes = fileInfo.Length;
+                    double sizeInKB = sizeInBytes / 1024.0;
+
+                    // Decide whether to display the size in KB or MB
+                    if (sizeInKB < 1024)
+                    {
+                        hookedLogs += $"{logName} ({sizeInKB:F2} KB){Environment.NewLine}";
+                    }
+                    else
+                    {
+                        double sizeInMB = sizeInKB / 1024.0;
+                        hookedLogs += $"{logName} ({sizeInMB:F2} MB){Environment.NewLine}";
+                    }
+                }
+                else
+                {
+                    hookedLogs += $"{logName} (File not found){Environment.NewLine}";
+                }
             }
 
-            MessageBox.Show(hookedLogs,"Hooked Logs",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            MessageBox.Show(hookedLogs, "Hooked Logs", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private static List<string> GetAvailableLogs()
         {
-            // Gell all the event logs that can be hooked and add there names to "logName" list.
+            // Gell all the event logs that can be hooked and add their names to "logName" list.
             List<String> logNames = new List<String>();
             foreach (EventLog myEvtLog in EventLog.GetEventLogs())
             {

@@ -29,17 +29,18 @@
         private void InitializeComponent()
         {
             this.table = new System.Windows.Forms.DataGridView();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.monitorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DisplayHookedLogsBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.StartorStopMonitoringBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LogName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EventSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EventID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EventMsg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.monitorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DisplayHookedLogsBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.StartorStopMonitoringBtn = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -61,59 +62,6 @@
             this.table.Name = "table";
             this.table.Size = new System.Drawing.Size(797, 307);
             this.table.TabIndex = 0;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.monitorToolStripMenuItem,
-            this.exportLogsToolStripMenuItem,
-            this.DisplayHookedLogsBtn,
-            this.StartorStopMonitoringBtn});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(797, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // monitorToolStripMenuItem
-            // 
-            this.monitorToolStripMenuItem.Name = "monitorToolStripMenuItem";
-            this.monitorToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.monitorToolStripMenuItem.Text = "Clear";
-            this.monitorToolStripMenuItem.Click += new System.EventHandler(this.monitorToolStripMenuItem_Click);
-            // 
-            // exportLogsToolStripMenuItem
-            // 
-            this.exportLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exportXMLToolStripMenuItem});
-            this.exportLogsToolStripMenuItem.Name = "exportLogsToolStripMenuItem";
-            this.exportLogsToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
-            this.exportLogsToolStripMenuItem.Text = "Export Logs";
-            // 
-            // exportXMLToolStripMenuItem
-            // 
-            this.exportXMLToolStripMenuItem.Name = "exportXMLToolStripMenuItem";
-            this.exportXMLToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
-            this.exportXMLToolStripMenuItem.Text = "Export XML";
-            this.exportXMLToolStripMenuItem.Click += new System.EventHandler(this.exportXML);
-            // 
-            // DisplayHookedLogsBtn
-            // 
-            this.DisplayHookedLogsBtn.Enabled = false;
-            this.DisplayHookedLogsBtn.Name = "DisplayHookedLogsBtn";
-            this.DisplayHookedLogsBtn.Size = new System.Drawing.Size(144, 20);
-            this.DisplayHookedLogsBtn.Text = "Display Monitored Logs";
-            this.DisplayHookedLogsBtn.Click += new System.EventHandler(this.displayHookedLogs);
-            // 
-            // StartorStopMonitoringBtn
-            // 
-            this.StartorStopMonitoringBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.StartorStopMonitoringBtn.BackColor = System.Drawing.Color.Green;
-            this.StartorStopMonitoringBtn.ForeColor = System.Drawing.Color.White;
-            this.StartorStopMonitoringBtn.Name = "StartorStopMonitoringBtn";
-            this.StartorStopMonitoringBtn.Size = new System.Drawing.Size(79, 20);
-            this.StartorStopMonitoringBtn.Text = "Monitoring";
-            this.StartorStopMonitoringBtn.Click += new System.EventHandler(this.StartMonitoringBtn_Click);
             // 
             // Time
             // 
@@ -144,6 +92,67 @@
             this.EventMsg.HeaderText = "Event Details";
             this.EventMsg.Name = "EventMsg";
             this.EventMsg.Width = 95;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.monitorToolStripMenuItem,
+            this.exportLogsToolStripMenuItem,
+            this.DisplayHookedLogsBtn,
+            this.StartorStopMonitoringBtn});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(797, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // monitorToolStripMenuItem
+            // 
+            this.monitorToolStripMenuItem.Name = "monitorToolStripMenuItem";
+            this.monitorToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.monitorToolStripMenuItem.Text = "Clear";
+            this.monitorToolStripMenuItem.Click += new System.EventHandler(this.monitorToolStripMenuItem_Click);
+            // 
+            // exportLogsToolStripMenuItem
+            // 
+            this.exportLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportCSVToolStripMenuItem,
+            this.exportXMLToolStripMenuItem});
+            this.exportLogsToolStripMenuItem.Name = "exportLogsToolStripMenuItem";
+            this.exportLogsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.exportLogsToolStripMenuItem.Text = "Export Logs";
+            // 
+            // exportCSVToolStripMenuItem
+            // 
+            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
+            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportCSVToolStripMenuItem.Text = "Export CSV";
+            this.exportCSVToolStripMenuItem.Click += new System.EventHandler(this.exportCSV);
+            // 
+            // exportXMLToolStripMenuItem
+            // 
+            this.exportXMLToolStripMenuItem.Name = "exportXMLToolStripMenuItem";
+            this.exportXMLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportXMLToolStripMenuItem.Text = "Export XML";
+            this.exportXMLToolStripMenuItem.Click += new System.EventHandler(this.exportXML);
+            // 
+            // DisplayHookedLogsBtn
+            // 
+            this.DisplayHookedLogsBtn.Enabled = false;
+            this.DisplayHookedLogsBtn.Name = "DisplayHookedLogsBtn";
+            this.DisplayHookedLogsBtn.Size = new System.Drawing.Size(144, 20);
+            this.DisplayHookedLogsBtn.Text = "Display Monitored Logs";
+            this.DisplayHookedLogsBtn.Click += new System.EventHandler(this.displayHookedLogs);
+            // 
+            // StartorStopMonitoringBtn
+            // 
+            this.StartorStopMonitoringBtn.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.StartorStopMonitoringBtn.BackColor = System.Drawing.Color.Green;
+            this.StartorStopMonitoringBtn.ForeColor = System.Drawing.Color.White;
+            this.StartorStopMonitoringBtn.Name = "StartorStopMonitoringBtn";
+            this.StartorStopMonitoringBtn.Size = new System.Drawing.Size(79, 20);
+            this.StartorStopMonitoringBtn.Text = "Monitoring";
+            this.StartorStopMonitoringBtn.Click += new System.EventHandler(this.StartMonitoringBtn_Click);
             // 
             // mainForm
             // 
@@ -178,6 +187,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn EventSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn EventID;
         private System.Windows.Forms.DataGridViewTextBoxColumn EventMsg;
+        private System.Windows.Forms.ToolStripMenuItem exportCSVToolStripMenuItem;
     }
 }
 
