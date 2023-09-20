@@ -41,6 +41,7 @@
             this.exportXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayHookedLogsBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.StartorStopMonitoringBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.adminIndicatorLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -125,14 +126,14 @@
             // exportCSVToolStripMenuItem
             // 
             this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
-            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.exportCSVToolStripMenuItem.Text = "Export CSV";
             this.exportCSVToolStripMenuItem.Click += new System.EventHandler(this.exportCSV);
             // 
             // exportXMLToolStripMenuItem
             // 
             this.exportXMLToolStripMenuItem.Name = "exportXMLToolStripMenuItem";
-            this.exportXMLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportXMLToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.exportXMLToolStripMenuItem.Text = "Export XML";
             this.exportXMLToolStripMenuItem.Click += new System.EventHandler(this.exportXML);
             // 
@@ -154,11 +155,21 @@
             this.StartorStopMonitoringBtn.Text = "Monitoring";
             this.StartorStopMonitoringBtn.Click += new System.EventHandler(this.StartMonitoringBtn_Click);
             // 
+            // adminIndicatorLabel
+            // 
+            this.adminIndicatorLabel.AutoSize = true;
+            this.adminIndicatorLabel.Location = new System.Drawing.Point(446, 8);
+            this.adminIndicatorLabel.Name = "adminIndicatorLabel";
+            this.adminIndicatorLabel.Size = new System.Drawing.Size(67, 13);
+            this.adminIndicatorLabel.TabIndex = 2;
+            this.adminIndicatorLabel.Text = "Administrator";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 331);
+            this.Controls.Add(this.adminIndicatorLabel);
             this.Controls.Add(this.table);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -188,6 +199,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn EventID;
         private System.Windows.Forms.DataGridViewTextBoxColumn EventMsg;
         private System.Windows.Forms.ToolStripMenuItem exportCSVToolStripMenuItem;
+        private System.Windows.Forms.Label adminIndicatorLabel;
     }
 }
 

@@ -7,6 +7,8 @@ using System.IO;
 using System.Diagnostics.Eventing.Reader;
 using System.Xml;
 using System.Text;
+using System.Security.Principal;
+using System.Drawing;
 
 namespace EventLogMonitor_GUI
 {
@@ -31,6 +33,18 @@ namespace EventLogMonitor_GUI
             table.CellMouseDoubleClick += ShowLogDetails;
             // log hooking and event capturing function.
             StartEventLogHook(AvailableLogs);
+
+            if (IsAdministrator())
+            {
+                adminIndicatorLabel.Text = "Running as Administrator";
+                adminIndicatorLabel.ForeColor = Color.Green;
+            }
+            else
+            {
+                adminIndicatorLabel.Text = "Not running as Administrator";
+                adminIndicatorLabel.ForeColor = Color.Red;
+            }
+
         }
 
         private void ShowLogDetails(object sender, DataGridViewCellMouseEventArgs e)
@@ -61,6 +75,13 @@ namespace EventLogMonitor_GUI
             }
         }
 
+        public static bool IsAdministrator()
+        {
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+            WindowsPrincipal principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
         // This function recives a list of event logs to be hooked and add "EventRecordWritten" event for each one.
         private void StartEventLogHook(List<String> logNames)
         {
@@ -81,7 +102,7 @@ namespace EventLogMonitor_GUI
                     Debug.WriteLine("Failed to register: " + logName);
                 }
             }
-            Debug.WriteLine("Hooked Logs : ");
+            Debug.WriteLine("Hooked Logs: ");
             foreach (String HookedLog in HookedLogs)
             {
                 Debug.WriteLine(HookedLog);
@@ -95,15 +116,24 @@ namespace EventLogMonitor_GUI
         // This function get triggered every time an event get writen to a hooked log.
         private void OnEntryWritten(object sender, EventRecordWrittenEventArgs e)
         {
+            if (e.EventRecord == null) return;  // Checking if EventRecord is null
+
             EventRecord entry = e.EventRecord;
             Events.Add(entry);
+
+            AddEntryToDataGridView(entry);
+        }
+
+        private void AddEntryToDataGridView(EventRecord entry)
+        {
             DataGridViewRow row = (DataGridViewRow)table.Rows[0].Clone();
 
-            row.Cells[0].Value = entry.TimeCreated;
+            row.Cells[0].Value = entry.TimeCreated?.ToString(); // Using null-conditional
             row.Cells[1].Value = entry.LogName;
             row.Cells[2].Value = entry.ProviderName;
             row.Cells[3].Value = entry.Id;
-            // The following code beautify the XML.
+
+            // Beautifying the XML
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(entry.ToXml());
             StringWriter sw = new StringWriter();
@@ -112,10 +142,17 @@ namespace EventLogMonitor_GUI
             row.Cells[4].Value = sw.ToString();
             row.Cells[4].ToolTipText = sw.ToString();
 
-            // Add the new row with the event entry data to the table.
-            table.Invoke((MethodInvoker)delegate {
+            // Adding row to DataGridView
+            if (table.InvokeRequired)
+            {
+                table.Invoke((MethodInvoker)delegate {
+                    table.Rows.Add(row);
+                });
+            }
+            else
+            {
                 table.Rows.Add(row);
-            });
+            }
         }
 
         // This function get triggered when the clear btn get clicked which clears the events :)
