@@ -24,6 +24,7 @@ You can clone this repository then build it your self or download the binary fro
 * Added indicator for running as Administrator
 * Renamed column headers in GUI
 * Added more Event Log Channels to monitor
+* Updated nuget packages
 
 ### 2.2
 * Forked/updated version
