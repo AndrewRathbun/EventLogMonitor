@@ -8,15 +8,15 @@ You can clone this repository then build it your self or download the binary fro
 
 ## Screenshots
 
-![EventDetails](imgs\EventDetails.jpg)
+![EventDetails](https://raw.githubusercontent.com/AndrewRathbun/EventLogMonitor/master/imgs/EventDetails.jpg)
 
-![GUI](imgs\GUI.jpg)
+![GUI](https://raw.githubusercontent.com/AndrewRathbun/EventLogMonitor/master/imgs/GUI.jpg)
 
-![GUIpopulated](imgs\GUIpopulated.jpg)
+![GUIpopulated](https://raw.githubusercontent.com/AndrewRathbun/EventLogMonitor/master/imgs/GUIpopulated.jpg)
 
-![Help](imgs\Help.jpg)
+![Help](https://raw.githubusercontent.com/AndrewRathbun/EventLogMonitor/master/imgs/Help.jpg)
 
-![HookedLogs](imgs\HookedLogs.jpg)
+![HookedLogs](https://raw.githubusercontent.com/AndrewRathbun/EventLogMonitor/master/imgs/HookedLogs.jpg)
 
 # ChangeLog
 
