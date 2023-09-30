@@ -84,7 +84,7 @@ namespace EventLogMonitor_GUI
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        // This function recives a list of event logs to be hooked and add "EventRecordWritten" event for each one.
+        // This function receives a list of event logs to be hooked and add "EventRecordWritten" event for each one.
         private void StartEventLogHook(List<String> logNames)
         {
             foreach (String logName in logNames)
@@ -188,7 +188,7 @@ namespace EventLogMonitor_GUI
             StringBuilder csvContent = new StringBuilder();
 
             // Define the header of the CSV file with the desired columns.
-            string header = "Time,Log Name,Event Source,EventID,Event Details";
+            string header = "Time,Channel,Provider,EventID,Event Details";
             csvContent.AppendLine(header);
 
             // Loop through all the EventRecord objects in the Events collection.
@@ -289,6 +289,10 @@ namespace EventLogMonitor_GUI
 
             // Add the setup event log to the hooked list.
             logNames.Add("Setup");
+            logNames.Add("Microsoft-Windows-Sysmon/Operational");
+            logNames.Add("Windows PowerShell");
+            logNames.Add("RdpCoreTS/Operational");
+            logNames.Add("Windows-TerminalServices-LocalSessionManager/Operational");
 
             return logNames;
         }

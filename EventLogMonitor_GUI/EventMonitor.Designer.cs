@@ -158,7 +158,8 @@
             // adminIndicatorLabel
             // 
             this.adminIndicatorLabel.AutoSize = true;
-            this.adminIndicatorLabel.Location = new System.Drawing.Point(446, 8);
+            this.adminIndicatorLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.adminIndicatorLabel.Location = new System.Drawing.Point(0, 318);
             this.adminIndicatorLabel.Name = "adminIndicatorLabel";
             this.adminIndicatorLabel.Size = new System.Drawing.Size(67, 13);
             this.adminIndicatorLabel.TabIndex = 2;
