@@ -16,10 +16,13 @@ namespace EventLogMonitor_GUI
     {
         // Get all the available logs (That can be hooked).
         List<String> AvailableLogs = GetAvailableLogs();
+
         // List of strings that contents all successful hooked logs
         List<String> HookedLogs = new List<string>();
+
         // List that contains all the events captured. This list is used to export the events.
         List<EventRecord> Events = new List<EventRecord>();
+
         // EventLogWatcher objects for all the hooked logs. THis list will be used to stop or start the monitoring process.
         List<EventLogWatcher> HookedLogsWatchers = new List<EventLogWatcher>();
 
@@ -44,7 +47,6 @@ namespace EventLogMonitor_GUI
                 adminIndicatorLabel.Text = "Not running as Administrator";
                 adminIndicatorLabel.ForeColor = Color.Red;
             }
-
         }
 
         private void ShowLogDetails(object sender, DataGridViewCellMouseEventArgs e)
@@ -102,6 +104,7 @@ namespace EventLogMonitor_GUI
                     Debug.WriteLine("Failed to register: " + logName);
                 }
             }
+
             Debug.WriteLine("Hooked Logs: ");
             foreach (String HookedLog in HookedLogs)
             {
@@ -110,13 +113,12 @@ namespace EventLogMonitor_GUI
 
             // enable the "Display Hooked Logs" button when finished hooking.
             DisplayHookedLogsBtn.Enabled = true;
-
         }
 
         // This function get triggered every time an event get writen to a hooked log.
         private void OnEntryWritten(object sender, EventRecordWrittenEventArgs e)
         {
-            if (e.EventRecord == null) return;  // Checking if EventRecord is null
+            if (e.EventRecord == null) return; // Checking if EventRecord is null
 
             EventRecord entry = e.EventRecord;
             Events.Add(entry);
@@ -145,9 +147,7 @@ namespace EventLogMonitor_GUI
             // Adding row to DataGridView
             if (table.InvokeRequired)
             {
-                table.Invoke((MethodInvoker)delegate {
-                    table.Rows.Add(row);
-                });
+                table.Invoke((MethodInvoker)delegate { table.Rows.Add(row); });
             }
             else
             {
@@ -171,6 +171,7 @@ namespace EventLogMonitor_GUI
             {
                 Results += Event.ToXml();
             }
+
             Results += "</Events>";
 
             XmlDocument xmlDoc = new XmlDocument();
@@ -194,7 +195,8 @@ namespace EventLogMonitor_GUI
             foreach (EventRecord eventRecord in Events)
             {
                 // Extract the relevant information from the EventRecord.
-                string time = eventRecord.TimeCreated?.ToString("yyyy-MM-dd HH:mm:ss.fff") ?? "N/A"; // TimeCreated is a nullable DateTime
+                string time = eventRecord.TimeCreated?.ToString("yyyy-MM-dd HH:mm:ss.fff") ??
+                              "N/A"; // TimeCreated is a nullable DateTime
                 string logName = eventRecord.LogName ?? "N/A"; // Replace with actual property for log name if it exists
                 string eventSource = eventRecord.ProviderName ?? "N/A";
                 string eventId = eventRecord.Id.ToString();
@@ -240,7 +242,8 @@ namespace EventLogMonitor_GUI
         // contains all the hooked logs.
         private void displayHookedLogs(object sender, EventArgs e)
         {
-            String hookedLogs = $"The following is a list of the logs that are being monitored for changes:{Environment.NewLine}{Environment.NewLine}";
+            String hookedLogs =
+                $"The following is a list of the logs that are being monitored for changes:{Environment.NewLine}{Environment.NewLine}";
 
             foreach (String logName in HookedLogs)
             {
@@ -283,6 +286,7 @@ namespace EventLogMonitor_GUI
             {
                 logNames.Add(myEvtLog.Log);
             }
+
             // Add the setup event log to the hooked list.
             logNames.Add("Setup");
 
@@ -300,13 +304,15 @@ namespace EventLogMonitor_GUI
             {
                 StartorStopMonitoringBtn.BackColor = System.Drawing.Color.Green;
                 StartorStopMonitoringBtn.Text = "Monitoring";
-                StartorStopMonitoringBtn.Font = new System.Drawing.Font(StartorStopMonitoringBtn.Font.FontFamily.Name, StartorStopMonitoringBtn.Font.Size,System.Drawing.FontStyle.Bold);
+                StartorStopMonitoringBtn.Font = new System.Drawing.Font(StartorStopMonitoringBtn.Font.FontFamily.Name,
+                    StartorStopMonitoringBtn.Font.Size, System.Drawing.FontStyle.Bold);
             }
             else
             {
                 StartorStopMonitoringBtn.BackColor = System.Drawing.Color.Red;
                 StartorStopMonitoringBtn.Text = "Not Monitoring";
-                StartorStopMonitoringBtn.Font = new System.Drawing.Font(StartorStopMonitoringBtn.Font.FontFamily.Name, StartorStopMonitoringBtn.Font.Size, System.Drawing.FontStyle.Italic);
+                StartorStopMonitoringBtn.Font = new System.Drawing.Font(StartorStopMonitoringBtn.Font.FontFamily.Name,
+                    StartorStopMonitoringBtn.Font.Size, System.Drawing.FontStyle.Italic);
             }
         }
 
