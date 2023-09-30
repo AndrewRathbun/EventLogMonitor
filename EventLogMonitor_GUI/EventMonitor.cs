@@ -51,7 +51,7 @@ namespace EventLogMonitor_GUI
 
         private void ShowLogDetails(object sender, DataGridViewCellMouseEventArgs e)
         {
-            // If the user double clicked on a cell on the "Event Details" colmun, Then display the details for that event.
+            // If the user double clicked on a cell on the "Event Details" column, Then display the details for that event.
             if (e.ColumnIndex == 4)
             {
                 // The details form. This form will be used later to display the event details.
@@ -60,7 +60,7 @@ namespace EventLogMonitor_GUI
                 {
                     if (c.Name == "textBox1")
                     {
-                        // Try retriving the details of the log. If there are no details then do not do any thing.
+                        // Try retrieving the details of the log. If there are no details then do not do any thing.
                         try
                         {
                             TextBox tb = (TextBox)c;
@@ -95,7 +95,7 @@ namespace EventLogMonitor_GUI
                     EventLogWatcher ew = new EventLogWatcher(query);
                     ew.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(OnEntryWritten);
                     ew.Enabled = true;
-                    Debug.WriteLine("Registred to : " + logName);
+                    Debug.WriteLine("Registered to : " + logName);
                     HookedLogs.Add(logName);
                     HookedLogsWatchers.Add(ew);
                 }
@@ -162,7 +162,7 @@ namespace EventLogMonitor_GUI
             Events.Clear();
         }
 
-        // Save the events captured to the spicifed path.
+        // Save the events captured to the specified path.
         private void SaveReportasXML(String path)
         {
             String Results = "<Events>";
@@ -188,7 +188,7 @@ namespace EventLogMonitor_GUI
             StringBuilder csvContent = new StringBuilder();
 
             // Define the header of the CSV file with the desired columns.
-            string header = "Time,Channel,Provider,EventID,Event Details";
+            string header = "Time,Channel,Provider,EventID,EventDetails";
             csvContent.AppendLine(header);
 
             // Loop through all the EventRecord objects in the Events collection.
@@ -324,5 +324,23 @@ namespace EventLogMonitor_GUI
         {
             StartStopMonitoring();
         }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Title for the message box
+            string title = "Quick Help";
+
+            // The actual help content/message you want to display
+            string message = "Run this application as Administrator to monitor more event logs!\n\n" +
+                             "- Time: The timestamp of the event log entry in UTC.\n" +
+                             "- Channel: The name of the .evtx file that the Event Log Provider is recording the event log(s) to.\n" +
+                             "- Provider: Event Log Provider that is recording the event log into the respective Channel.\n" +
+                             "- EventID: Event ID for the specific Provider.\n" +
+                             "- EventDetails: Raw event log data in XML format (Double-click to view in a new window).\n";
+
+            // Display the message box
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
     }
 }

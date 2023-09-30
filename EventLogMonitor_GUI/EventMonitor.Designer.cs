@@ -42,6 +42,7 @@
             this.DisplayHookedLogsBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.StartorStopMonitoringBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.adminIndicatorLabel = new System.Windows.Forms.Label();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.table)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -100,7 +101,8 @@
             this.monitorToolStripMenuItem,
             this.exportLogsToolStripMenuItem,
             this.DisplayHookedLogsBtn,
-            this.StartorStopMonitoringBtn});
+            this.StartorStopMonitoringBtn,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(797, 24);
@@ -165,6 +167,13 @@
             this.adminIndicatorLabel.TabIndex = 2;
             this.adminIndicatorLabel.Text = "Administrator";
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -201,6 +210,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn EventMsg;
         private System.Windows.Forms.ToolStripMenuItem exportCSVToolStripMenuItem;
         private System.Windows.Forms.Label adminIndicatorLabel;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 
