@@ -63,7 +63,7 @@ namespace EventLogMonitor_GUI
                         // Try retrieving the details of the log. If there are no details then do not do any thing.
                         try
                         {
-                            TextBox tb = (TextBox)c;
+                            TextBox tb = (TextBox) c;
                             tb.Text = table.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                             tb.SelectionStart = 0;
                             tb.SelectionLength = 0;
@@ -128,7 +128,7 @@ namespace EventLogMonitor_GUI
 
         private void AddEntryToDataGridView(EventRecord entry)
         {
-            DataGridViewRow row = (DataGridViewRow)table.Rows[0].Clone();
+            DataGridViewRow row = (DataGridViewRow) table.Rows[0].Clone();
 
             row.Cells[0].Value = entry.TimeCreated?.ToString(); // Using null-conditional
             row.Cells[1].Value = entry.LogName;
@@ -147,7 +147,7 @@ namespace EventLogMonitor_GUI
             // Adding row to DataGridView
             if (table.InvokeRequired)
             {
-                table.Invoke((MethodInvoker)delegate { table.Rows.Add(row); });
+                table.Invoke((MethodInvoker) delegate { table.Rows.Add(row); });
             }
             else
             {
@@ -341,6 +341,5 @@ namespace EventLogMonitor_GUI
             // Display the message box
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
     }
 }
